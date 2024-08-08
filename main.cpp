@@ -8,6 +8,8 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
 
+#include "hw1.h"
+
 const int KERNEL_RADIUS = 8;
 const float sigma = 3.f;
 
@@ -159,19 +161,21 @@ void gaussian_blur_separate_serial(const char* filename)
 	delete[] img_out;
 }
 
+//#define TEST_SERIAL
+//#define TEST_SEPARATE_SERIAL
 int main()
 {
 	const char* filename = "garden.jpg";
+#ifdef TEST_SERIAL
 	gaussian_blur_serial(filename);
+#endif
+	gaussian_blur_parallel(filename);
 
-	// gaussian_blur_parallel(filename);
-
-	
-	
 	const char* filename2 = "street_night.jpg";
+#ifdef TEST_SEPARATE_SERIAL
 	gaussian_blur_separate_serial(filename2);
-
-	// gaussian_blur_separate_parallel(filename2);
+#endif
+	gaussian_blur_separate_parallel(filename2);		/* TODO */
 
 	return 0;
 }
